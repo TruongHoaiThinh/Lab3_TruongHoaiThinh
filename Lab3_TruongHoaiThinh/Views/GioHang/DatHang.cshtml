@@ -1,0 +1,127 @@
+﻿@model IEnumerable<Lab3_TruongHoaiThinh.Models.Giohang>
+
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DatHang</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.masach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tensach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.giaban)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.iSoluong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dThanhtien)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.masach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tensach)
+            </td>
+            <td><img src="@item.hinh" width="200" /></td>
+            @using (Html.BeginForm("Capnhatgiohang", "Giohang", new { IDataBindingsAccessor = item.masach }))
+            {
+                <td>
+                    @string.Format("{0:0,0}", item.giaban) VND
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.iSoluong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dThanhtien)
+                </td>
+            }
+        </tr>
+    }
+    <tr style="font-weight: bold; text-align; color:red">
+        <td colspan="3">So luong sach: @ViewBag.Tongsoluong></td>
+        <td colspan="4">So loai sach: @ViewBag.Tongsoluongsanpham></td>
+        <td colspan="5">Tong tien: @String.Format("{0:0,0}", @ViewBag.Tongtien)VND</td>
+
+    </tr>
+    <tr style="font-weight:bold;text-align:right">
+        <td colspan="6">@Html.ActionLink("Tro ve gio hang", "Giohang", "GioHang")</td>
+    </tr>
+
+
+</table>
+
+@using Lab3_TruongHoaiThinh.Models
+<h2 style="text-align:center">Thong tin dat hang</h2>
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+}
+<table align="center">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <tr style="height:40px">
+            <td>Ho ten khach hang:</td>
+            <td style="font-weight:bold">
+                @kh.hoten
+            </td>
+        </tr>
+
+        <tr style="height:40px">
+            <td>Email:</td>
+            <td style="font-weight:bold">
+                @kh.email
+            </td>
+        </tr>
+
+        <tr style="height:40px">
+            <td>Dia chi:</td>
+            <td style="font-weight:bold">
+                @kh.diachi
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Dien thoai:</td>
+            <td style="font-weight:bold">
+                @kh.dienthoai
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Ngay dat:</td>
+            <td style="font-weight:bold">
+                @DateTime.Now.ToShortDateString()
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Ngay giao:</td>
+            <td style="font-weight:bold">
+                <input type="date" name="NgayGiao" />
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td></td>
+            <td style="font-weight:bold">
+                <input type="submit" value="Xac nhan" class="btn btn-success" />
+            </td>
+        </tr>
+    }
+</table>
